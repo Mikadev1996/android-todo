@@ -26,7 +26,7 @@ import com.example.todolist.data.ToDo
 fun ToDoItem(
     todo: ToDo,
     onEvent: (ToDoListEvent) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier
 ) {
     Row(
         modifier = Modifier,
@@ -55,17 +55,3 @@ fun ToDoItem(
         })
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    ToDoItem(
-//        todo = ToDo(
-//            id = 1,
-//            title = "Sample Task",
-//            description = "This is a description",
-//            isCompleted = false
-//        ),
-//        onEvent = {}
-//    )
-//}

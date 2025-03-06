@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.dagger.hilt.android") version "2.51.1" apply false
+    kotlin("kapt")
 }
 
 android {
@@ -31,12 +32,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
     }
@@ -45,16 +47,21 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/gradle/incremental.annotation.processors"
         }
     }
 }
 
+configurations.implementation{
+    exclude(group = "com.intellij", module = "annotations")
+}
+
+
 dependencies {
-    implementation("androidx.compose.ui:ui:1.7.8")           // Compose UI
-    implementation("androidx.compose.ui:ui-tooling:1.5.0")   // Preview support
-    implementation("androidx.compose.material:material:1.5.0") // Material Design components
-    debugImplementation("androidx.compose.ui:ui-tooling:1.5.0")
+    implementation(libs.ui)           // Compose UI
+    implementation(libs.ui.tooling)   // Preview support
+    implementation(libs.androidx.material) // Material Design components
+    debugImplementation(libs.ui.tooling)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -64,7 +71,6 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.kotlin.kapt)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -81,13 +87,10 @@ dependencies {
     implementation (libs.hilt.android)
     implementation (libs.androidx.hilt.lifecycle.viewmodel)
     implementation (libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.hilt.compiler)
     implementation(libs.hilt.android.compiler)
 
     // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.compiler)
-
-    // Kotlin Extensions and Coroutines support for Room
     implementation (libs.androidx.room.ktx)
 }
